@@ -13,13 +13,13 @@ module Klaviyo
     test 'should get index' do
       get metrics_path
       assert_response :success
-      assert_template "klaviyo/metrics/index"
+      assert_template 'klaviyo/metrics/index'
     end
 
     test 'should get show' do
       get metric_path('YgaPzY')
       assert_response :success
-      assert_template "klaviyo/metrics/show"
+      assert_template 'klaviyo/metrics/show'
     end
   end
 end

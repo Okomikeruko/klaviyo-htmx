@@ -1,18 +1,24 @@
 # frozen_string_literal: true
 
 module Klaviyo
+  # MetricsController handles actions related to Klaviyo metrics.
   class MetricsController < ApplicationController
+    # GET /klaviyo/metrics
+    # Fetches and displays a list of metrics.
     def index
       @metrics = KlaviyoAPI::Metrics.get_metrics
     end
 
+    # GET /klaviyo/metrics/:id
+    # Displays details of a specific metric.
     def show
       @metric = KlaviyoAPI::Metrics.get_metric params[:id]
     end
 
-
+    # POST /klaviyo/metrics/:id/query_aggregates
+    # Initiates a metric-aggregate query and renders the result without layout.
     def query_aggregates
-      @aggregates = KlaviyoAPI::Metrics.query_metric_aggregates(metric_query(params[:id]))
+      @aggregates = KlaviyoAPI::Metrics.query_metric_aggregates(metric_query(params[:id]), metrics_query_params)
 
       render layout: false
     end
@@ -50,6 +56,23 @@ module Klaviyo
       filter
     end
 
-    def metric_query_params; end
+    # Defines strong parameters for the metrics query.
+    #
+    # If the 'metric_query' parameter is present in the request, the method
+    # permits specific fields and returns a strong parameters object.
+    # Otherwise, an empty hash is returned.
+    #
+    # @return [ActionController::Parameters, {}] Strong parameters object
+    #   containing permitted fields for metrics query if 'metric_query' is present,
+    #   otherwise an empty hash.
+    def metrics_query_params
+      if params[:metric_query].present?
+        params.require(:metric_query)
+              .permit(:id, :interval, :page_size, :timezone, :start_time,
+                      :endtime, filter: [])
+      else
+        {}
+      end
+    end
   end
 end
