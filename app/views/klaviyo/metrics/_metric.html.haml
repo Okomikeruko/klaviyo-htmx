@@ -1,0 +1,7 @@
+- url = metric[:links][:self]
+- id = url.match(/\/metrics\/([^\/]+)/)[1]
+.my-4
+  = render "klaviyo/shared/button_link", path: metric_path(id) do
+    .flex.justify-between.items-center
+      %h3.text-3xl=metric[:attributes][:name]
+      %p.font-bold= metric[:attributes][:integration][:name]

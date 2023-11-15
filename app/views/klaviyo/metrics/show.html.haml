@@ -1,0 +1,7 @@
+= render "klaviyo/shared/page_header",
+         title: @metric[:data][:attributes][:name],
+         path: metrics_path
+
+%div{ "hx-post": query_aggregates_metric_path(@metric[:data][:id]),
+      "hx-trigger": "load once"}
+  Loading

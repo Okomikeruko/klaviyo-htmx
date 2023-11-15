@@ -1,0 +1,14 @@
+!!!
+%html
+  %head
+    %title Klaviyo
+    = csrf_meta_tags
+    = csp_meta_tag
+    %script{ src: "https://cdn.tailwindcss.com" }
+    %script{ src: "https://unpkg.com/htmx.org@1.9.8",
+             integrity: "sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr",
+             crossorigin: "anonymous" }
+    = stylesheet_link_tag "klaviyo/application", media: "all"
+  %body.bg-black.text-slate-400{ "hx-headers": "{\"X-CSRF-Token\": \"#{form_authenticity_token}\"}" }
+    .container.mx-auto.pt-4
+      = yield

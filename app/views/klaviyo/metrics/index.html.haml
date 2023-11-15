@@ -1,0 +1,3 @@
+= render "klaviyo/shared/page_header", title: "Metrics"
+- @metrics[:data].each do |metric|
+  = render "metric", metric:
